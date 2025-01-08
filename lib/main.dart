@@ -46,10 +46,26 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var defaultTextStyle = TextStyle(
+      color: Colors.white,
+      fontSize: 14,
+    );
     return Scaffold(
+      backgroundColor: Color(0xFF0A1A2E),
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        backgroundColor: Color(0xFF1A2B3C),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 2.0),
+              child: Text(
+                widget.title,
+                style: defaultTextStyle,
+              ),
+            ),
+          ],
+        ),
       ),
       body: Center(
         child: Column(
@@ -57,6 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             const Text(
               'You have pushed the button this many times:',
+              style: defaultTextStyle,
             ),
             Text(
               '$_counter',
