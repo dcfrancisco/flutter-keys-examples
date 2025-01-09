@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keys_examples/my_home_page.dart';
 
-import 'pages/favorites_page.dart';
-import 'pages/home_page.dart';
-import 'pages/search_page.dart';
-import 'pages/settings_page.dart';
-import 'widgets/padded_bottom_navigation_bar_item.dart';
-
 void main() {
   runApp(const MyApp());
 }
