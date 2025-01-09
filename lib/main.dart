@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'pages/favorites_page.dart';
+import 'pages/home_page.dart';
+import 'pages/search_page.dart';
+import 'pages/settings_page.dart';
+import 'widgets/padded_bottom_navigation_bar_item.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -31,91 +37,62 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int _seletedIndex = 0;
 
-  void _decrementCounter() {
-    setState(() {
-      _counter--;
-    });
-  }
+  static const List<Widget> _pages = <Widget>[
+    HomePage(),
+    FavoritesPage(),
+    SearchPage(),
+    SettingsPage(),
+  ];
 
-  void _incrementCounter() {
+  void _onItemTapped(int index) {
     setState(() {
-      _counter++;
-    });
-  }
-
-  void _clearCounter() {
-    setState(() {
-      _counter = 0;
+      _seletedIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    var _seletedIndex = 0;
-
-    void _onItemTapped(int index) {
-      setState(() {
-        _seletedIndex = index;
-      });
-    }
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+      body: _pages.elementAt(_seletedIndex),
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+            canvasColor: Color.fromRGBO(8, 27, 37, 1),
+            textTheme: Theme.of(context)
+                .textTheme
+                .copyWith(bodySmall: TextStyle(color: Colors.black))),
+        child: BottomNavigationBar(
+          items: [
+            PaddedBottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            PaddedBottomNavigationBarItem(
+              icon: Icon(Icons.favorite),
+              label: 'Favorites',
+            ),
+            PaddedBottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Search',
+            ),
+            PaddedBottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: 'Settings',
             ),
           ],
+          currentIndex: _seletedIndex,
+          onTap: _onItemTapped,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          selectedItemColor: Colors.amber,
+          unselectedItemColor: Colors.white,
+          backgroundColor: Color.fromRGBO(8, 27, 37, 0.8),
         ),
-      ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: _incrementCounter,
-            tooltip: 'Increment',
-            child: const Icon(Icons.add),
-          ),
-          SizedBox(width: 8),
-          FloatingActionButton(
-            onPressed: _decrementCounter,
-            tooltip: 'Decrement',
-            child: const Icon(Icons.remove),
-          ),
-          SizedBox(width: 8),
-          FloatingActionButton(
-            onPressed: _clearCounter,
-            tooltip: 'Clear',
-            child: const Icon(Icons.delete_outlined),
-          ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_box),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: _seletedIndex,
-        onTap: _onItemTapped,
-        selectedItemColor: Colors.amber,
       ),
     );
   }
